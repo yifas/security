@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bin.project.dao.SysUserDao">
+    <!--  <select id="findByWords" resultType="com.bin.pojo.EnWords">
+          SELECT * FROM EnWords where word like concat(#{words},'%')
+      </select>-->
+
+    <select id="findByUsername" resultType="com.bin.project.pojo.SysUser">
+        SELECT * FROM sys_user where username = #{username}
+    </select>
+
+    <select id="findRoleByUsername" resultType="java.lang.String">
+        SELECT
+        	name
+        FROM
+        	sys_role
+        WHERE
+        	id IN ( SELECT role_id FROM sys_user_role WHERE user_id = ( SELECT id FROM `sys_user` WHERE username = #{username}) );
+	 </select>
+
+    <select id="findUserList" resultType="com.bin.project.pojo.SysUser">
+        SELECT * FROM sys_user
+    </select>
+
+    <select id="findRole" resultType="com.bin.project.pojo.SysRole">
+       select
+        sr.*
+        from sys_user  su
+        left join sys_user_role sur
+        on su.id=sur.user_id
+        left join sys_role sr
+        on sr.id = sur.role_id
+        where su.username=#{username};
+    </select>
+
+    <select id="findPermission" resultType="com.bin.project.pojo.SysPermission">
+        select
+            sa.*
+            from sys_permission sa
+            left join sys_role_permission sra
+            on sa.id=sra.permission_id
+            where sra.role_id=#{id}
+
+    </select>
+</mapper>
