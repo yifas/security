@@ -44,4 +44,17 @@ public interface SysUserDao {
      * @return
      */
     Set<SysPermission> findPermission(@Param("id") Integer id);
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
+    SysUser findById(Long id);
+
+    /**
+     * 更新用户信息
+     * @param sysUser
+     */
+    void updateUser(SysUser sysUser);
 }

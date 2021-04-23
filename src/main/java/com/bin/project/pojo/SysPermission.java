@@ -12,7 +12,7 @@ public class SysPermission implements Serializable {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * name

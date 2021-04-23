@@ -50,4 +50,11 @@
             where sra.role_id=#{id}
 
     </select>
+    <!--更新用户信息-->
+    <update id="updateUser">
+        update sys_user set
+        where
+
+        
+    </update>
 </mapper>

@@ -13,7 +13,7 @@ public class SysUser implements Serializable {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * birthday

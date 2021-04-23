@@ -2,6 +2,7 @@ package com.bin.project.controller;
 
 import com.bin.common.Result;
 import com.bin.project.service.SysRoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/role")
+@Slf4j
 public class SysRoleController {
 
     @Autowired

@@ -3,6 +3,7 @@ package com.bin.project.service;
 import com.bin.common.PageQueryBean;
 import com.bin.common.PageResult;
 import com.bin.project.pojo.SysUser;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,7 +25,15 @@ public interface SysUserService {
 
     /**
      * 查询所有用户
-     * @return
+     * @return 分页结果对象
      */
     PageResult findUserList(PageQueryBean pageQueryBean);
+
+    /**
+     * 更新用户信息
+     * @param id
+     * @param sysUser
+     */
+    @Transactional
+    void updateUser(Long id, SysUser sysUser);
 }

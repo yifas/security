@@ -42,5 +42,14 @@ public class SysUserServiceImpl implements SysUserService {
         return new PageResult(page.getTotal(),page.getResult());
     }
 
+    @Override
+    public void updateUser(Long id, SysUser sysUser) {
+        sysUser.setId(id);
+       // SysUser user = sysUserDao.findById(id);
+
+        sysUserDao.updateUser(sysUser);
+
+    }
+
 
 }

@@ -3,13 +3,11 @@ package com.bin.project.controller;
 
 import com.bin.common.PageQueryBean;
 import com.bin.common.Result;
+import com.bin.project.pojo.SysUser;
 import com.bin.project.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户的增删改查
@@ -41,5 +39,10 @@ public class SysUserController {
     }
 
 
+    @PostMapping(value = "/updateUser/{id}")
+    public Result updateUser(@PathVariable Long id,@RequestBody SysUser sysUser) {
+        sysUserService.updateUser(id,sysUser);
+        return new Result(200,"查询成功");
+    }
 
 }

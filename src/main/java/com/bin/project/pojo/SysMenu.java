@@ -12,7 +12,7 @@ public class SysMenu implements Serializable {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * name

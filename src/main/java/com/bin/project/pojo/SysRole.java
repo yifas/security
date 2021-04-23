@@ -12,7 +12,7 @@ public class SysRole implements Serializable {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * name
