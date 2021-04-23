@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(LoginConstant.USER_DOES_NOT_EXIST);
         }else {
             //查询用户名对应的所有role  List<Role> 可以为Role对象 get需要的数据
-            List<String> roleList = sysUserDao.findRoleByUsername(username.trim());
+            //List<String> roleList = sysUserDao.findRoleByUsername(username.trim());
             //todo  遍历list  查询对应的menu  Role需要前缀
             //#根据username查询ROle
             Set<SysRole> roleSet = sysUserDao.findRole(username);

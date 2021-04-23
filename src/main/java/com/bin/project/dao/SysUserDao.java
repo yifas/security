@@ -3,6 +3,7 @@ package com.bin.project.dao;
 import com.bin.project.pojo.SysPermission;
 import com.bin.project.pojo.SysRole;
 import com.bin.project.pojo.SysUser;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -25,10 +26,10 @@ public interface SysUserDao {
     List<String> findRoleByUsername(@Param("username") String username);
 
     /**
-     * 查询所有用户
+     * 分页查询所有用户
      * @return
      */
-    List<SysUser> findUserList();
+    Page<SysUser> findUserList(String queryString);
 
     /**
      * 查询Role集合

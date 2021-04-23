@@ -10,6 +10,8 @@
         SELECT * FROM sys_user where username = #{username}
     </select>
 
+
+    <!--权限框架中在用-->
     <select id="findRoleByUsername" resultType="java.lang.String">
         SELECT
         	name
@@ -21,8 +23,12 @@
 
     <select id="findUserList" resultType="com.bin.project.pojo.SysUser">
         SELECT * FROM sys_user
+        <if test="queryString != null and queryString.length > 0">
+            where username=#{queryString} or telephone=#{queryString}
+        </if>
     </select>
 
+    <!--权限框架中在用-->
     <select id="findRole" resultType="com.bin.project.pojo.SysRole">
        select
         sr.*
@@ -34,6 +40,7 @@
         where su.username=#{username};
     </select>
 
+    <!--权限框架中在用-->
     <select id="findPermission" resultType="com.bin.project.pojo.SysPermission">
         select
             sa.*

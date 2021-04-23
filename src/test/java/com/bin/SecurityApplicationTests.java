@@ -1,5 +1,6 @@
 package com.bin;
 
+import com.bin.project.service.SysRoleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 class SecurityApplicationTests {
@@ -16,6 +19,8 @@ class SecurityApplicationTests {
     @Autowired
     ConfigurableApplicationContext run;
 
+    @Autowired
+    private SysRoleService sysRoleService;
     /**
      * BCrypt加盐加密
      */
@@ -25,6 +30,19 @@ class SecurityApplicationTests {
         //注：底层已经加盐了！！
         String encode = passwordEncoder.encode("123456");
         System.err.println(encode);
+    }
+
+    @Test
+    void testUpdateRole(){
+
+        Long id = 6L;
+        List<Long> roleIds = new ArrayList<>();
+        roleIds.add(1L);
+        roleIds.add(2L);
+
+        int i = sysRoleService.updateRole(id, roleIds);
+        System.out.println(i);
+
     }
 
     /**

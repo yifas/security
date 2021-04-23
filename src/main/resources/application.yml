@@ -9,22 +9,26 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
-  configuration:  #¿ªÆôÍÕ·åÃüÃû
+  configuration:  #å¼€å¯é©¼å³°å‘½åè½¬æ¢
     map-underscore-to-camel-case: true
-#redisÅäÖÃ
+#redisé…ç½®
   redis:
     host: 127.0.0.1
     port: 6379
     password:
-    timeout: 300ms # Á¬½Ó³¬Ê±Ê±¼ä£¨ºÁÃë£©
+    timeout: 300ms #è¶…æ—¶è¯·æ±‚æ—¶é—´
 
 token:
   refreshTime: 88200
   expireTime: 1
   preFix: Token_
 
-#¿ØÖÆÌ¨´òÓ¡SQL
+#æ§åˆ¶å°è¾“å‡ºSQL
 logging:
   level:
     com.bin.project.dao: debug
 
+#åˆ†é¡µpageHelper
+pagehelper:
+  helper-dialect: mysql #é…ç½®ä½¿ç”¨å“ªç§æ•°æ®åº“è¯­è¨€
+  reasonable: true

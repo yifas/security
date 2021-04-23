@@ -1,5 +1,7 @@
 package com.bin.project.service;
 
+import com.bin.common.PageQueryBean;
+import com.bin.common.PageResult;
 import com.bin.project.pojo.SysUser;
 
 import java.util.List;
@@ -24,5 +26,5 @@ public interface SysUserService {
      * 查询所有用户
      * @return
      */
-    List<SysUser> findUserList();
+    PageResult findUserList(PageQueryBean pageQueryBean);
 }

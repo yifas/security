@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bin.project.dao.SysRoleDao">
+    <!--  <select id="findByWords" resultType="com.bin.pojo.EnWords">
+          SELECT * FROM EnWords where word like concat(#{words},'%')
+      </select>-->
+
+    <select id="roleList" resultType="com.bin.project.pojo.SysRole">
+        SELECT * FROM sys_role;
+    </select>
+
+    <select id="findRoleAlreadyLogin" resultType="com.bin.project.pojo.SysRole">
+          SELECT
+        	*
+        FROM
+        	sys_role
+        WHERE
+        	id IN ( SELECT role_id FROM sys_user_role WHERE user_id = ( SELECT id FROM `sys_user` WHERE username = #{username}) );
+    </select>
+
+    <select id="findRoleById" resultType="com.bin.project.pojo.SysRole">
+       select
+        sr.*
+        from sys_user  su
+        left join sys_user_role sur
+        on su.id=sur.user_id
+        left join sys_role sr
+        on sr.id = sur.role_id
+        where su.id=#{id};
+    </select>
+
+
+</mapper>

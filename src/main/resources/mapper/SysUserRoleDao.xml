@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bin.project.dao.SysUserRoleDao">
+    <!--  <select id="findByWords" resultType="com.bin.pojo.EnWords">
+          SELECT * FROM EnWords where word like concat(#{words},'%')
+      </select>-->
+
+    <delete id="delRelationByUserId" >
+        DELETE FROM sys_user_role where user_id=#{id};
+    </delete>
+
+    <!--批量插入到关系表-->
+    <insert id="insertList">
+        insert into sys_user_role(user_id,role_id) values
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.userId,jdbcType=BIGINT},
+            #{item.roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+
+</mapper>
