@@ -2,10 +2,13 @@ package com.bin;
 
 import com.bin.project.service.SysRoleService;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +16,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 class SecurityApplicationTests {
 
@@ -45,6 +49,15 @@ class SecurityApplicationTests {
 
     }
 
+    @Test
+    void testLogging(){
+         Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.trace("日志输出 trace");
+        logger.debug("日志输出 debug");
+        logger.info("日志输出 info");
+        logger.warn("日志输出 warn");
+        logger.error("日志输出 error");
+    }
     /**
      * 获取所有方法url
      * @param run

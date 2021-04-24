@@ -43,7 +43,7 @@ public interface SysUserDao {
      * @param id
      * @return
      */
-    Set<SysPermission> findPermission(@Param("id") Integer id);
+    Set<SysPermission> findPermission(@Param("id") Long id);
 
     /**
      * 根据id查询用户信息

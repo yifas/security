@@ -106,7 +106,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
          //subject内容不为空 但是框架中无权限信息  重新走登录逻辑
             //Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                //todo ？相当于重新查询了一遍权限
+                //解析完成交给框架认证
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (userDetails != null) {
                     //框架验证token
