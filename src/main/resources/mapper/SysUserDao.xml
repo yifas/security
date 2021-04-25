@@ -6,10 +6,110 @@
           SELECT * FROM EnWords where word like concat(#{words},'%')
       </select>-->
 
+    <sql id="userInfo">
+        birthday,gender,username,remark,station,telephone,login_time
+    </sql>
     <select id="findByUsername" resultType="com.bin.project.pojo.SysUser">
         SELECT * FROM sys_user where username = #{username}
     </select>
 
+    <!--新增用户-->
+    <insert id="register" parameterType="com.bin.project.pojo.SysUser">
+        <selectKey keyProperty="id" resultType="Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                birthday,
+
+            <if test="null != gender and '' != gender">
+                gender,
+            </if>
+            <if test="null != username and '' != username">
+                username,
+            </if>
+            <if test="null != password and '' != password">
+                password,
+            </if>
+            <if test="null != remark and '' != remark">
+                remark,
+            </if>
+            <if test="null != station and '' != station">
+                station,
+            </if>
+            <if test="null != telephone and '' != telephone">
+                telephone,
+            </if>
+                create_time,
+                login_time
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+                #{birthday},
+
+            <if test="null != gender and '' != gender">
+                #{gender},
+            </if>
+            <if test="null != username and '' != username">
+                #{username},
+            </if>
+            <if test="null != password and '' != password">
+                #{password},
+            </if>
+            <if test="null != remark and '' != remark">
+                #{remark},
+            </if>
+            <if test="null != station and '' != station">
+                #{station},
+            </if>
+            <if test="null != telephone and '' != telephone">
+                #{telephone},
+            </if>
+                #{createTime},
+                #{loginTime}
+        </trim>
+    </insert>
+
+    <!--更新用户信息-->
+    <update id="updateUser" parameterType="com.bin.project.pojo.SysUser">
+        update sys_user
+        <set>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="remark!=null">
+                remark=#{remark},
+            </if>
+            <if test="station!=null">
+                station=#{station},
+            </if>
+            <if test="telephone!=null">
+                telephone=#{telephone},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <if test="loginTime!=null">
+                login_time=#{loginTime},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--用户信息的回显-->
+    <select id="findUserById" resultType="com.bin.project.pojo.SysUser">
+        SELECT
+        <include refid="userInfo"></include>
+        FROM sys_user where id = #{id}
+    </select>
 
     <!--权限框架中在用-->
     <select id="findRoleByUsername" resultType="java.lang.String">
@@ -50,11 +150,5 @@
             where sra.role_id=#{id}
 
     </select>
-    <!--更新用户信息-->
-    <update id="updateUser">
-        update sys_user set
-        where
 
-        
-    </update>
 </mapper>

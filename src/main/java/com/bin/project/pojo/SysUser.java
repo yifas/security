@@ -56,7 +56,7 @@ public class SysUser implements Serializable {
     private Date createTime;
 
     /**
-     * 登陆时间
+     * 登录时间
      */
     private Date loginTime;
 

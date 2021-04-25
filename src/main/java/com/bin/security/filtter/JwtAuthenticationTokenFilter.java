@@ -118,6 +118,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             }else {
                 // 防止获取不到用户id，而引发的NPE
                 response.setHeader("Access-Control-Allow-Origin", "*");
+                //登录失效 前面会删除Redis中的Token
                 response.getWriter().write(JSON.toJSONString(Result.error(ResultEnum.LOGIN_OVERDUE)));
                 return;
             }

@@ -1,5 +1,6 @@
 package com.bin.project.dao;
 
+import com.bin.project.dto.RegisterParam;
 import com.bin.project.pojo.SysPermission;
 import com.bin.project.pojo.SysRole;
 import com.bin.project.pojo.SysUser;
@@ -50,11 +51,25 @@ public interface SysUserDao {
      * @param id
      * @return
      */
-    SysUser findById(Long id);
+    //SysUser findById(Long id);
 
     /**
      * 更新用户信息
      * @param sysUser
      */
     void updateUser(SysUser sysUser);
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
+    SysUser findUserById(@Param("id")Long id);
+
+    /**
+     * 新增用户
+     * @param sysUser
+     * @return
+     */
+    void register(SysUser sysUser);
 }

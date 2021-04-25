@@ -2,6 +2,7 @@ package com.bin.project.service;
 
 import com.bin.common.PageQueryBean;
 import com.bin.common.PageResult;
+import com.bin.project.dto.RegisterParam;
 import com.bin.project.pojo.SysUser;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,4 +37,18 @@ public interface SysUserService {
      */
     @Transactional
     void updateUser(Long id, SysUser sysUser);
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
+    SysUser findUserById(Long id);
+
+    /**
+     * 新增用户
+     * @param registerParam
+     * @return
+     */
+    SysUser register(RegisterParam registerParam);
 }
