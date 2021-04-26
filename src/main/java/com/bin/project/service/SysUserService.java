@@ -51,4 +51,11 @@ public interface SysUserService {
      * @return
      */
     SysUser register(RegisterParam registerParam);
+
+    /**
+     * 根据ID获得所有的Role和Permission
+     * @param id
+     * @return
+     */
+    List<String> getUserAuthorityInfo(Long id);
 }

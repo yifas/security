@@ -111,6 +111,39 @@
         FROM sys_user where id = #{id}
     </select>
 
+    <!--用于动态菜单的生成-->
+    <select id="getUserRoleInfo" resultType="java.lang.String">
+        select DISTINCT
+        sr.keyword
+        from sys_user  su
+        left join sys_user_role sur
+        on su.id=sur.user_id
+        left join sys_role sr
+        on sr.id = sur.role_id
+        left join sys_role_permission srp
+        on sr.id=srp.role_id
+         left join sys_permission sp
+        	on sp.id = srp.permission_id
+        where su.id=#{id};
+    </select>
+
+    <select id="getUserAuthInfo" resultType="java.lang.String">
+        select DISTINCT
+         sp.keyword
+        from sys_user  su
+        left join sys_user_role sur
+        on su.id=sur.user_id
+        left join sys_role sr
+        on sr.id = sur.role_id
+        left join sys_role_permission srp
+        on sr.id=srp.role_id
+         left join sys_permission sp
+        	on sp.id = srp.permission_id
+        where su.id=#{id};
+    </select>
+
+
+
     <!--权限框架中在用-->
     <select id="findRoleByUsername" resultType="java.lang.String">
         SELECT

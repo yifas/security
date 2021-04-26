@@ -5,18 +5,18 @@ import com.bin.common.Result;
 import com.bin.common.util.JwtTokenUtil;
 import com.bin.common.util.RedisUtil;
 import com.bin.project.dto.LoginParam;
+import com.bin.project.pojo.SysUser;
+import com.bin.project.service.SysUserService;
 import com.bin.security.component.UserInfo;
 import com.bin.security.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +37,9 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
+    private SysUserService sysUserService;
+
+    @Autowired
     private RedisUtil redisUtil;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
@@ -46,6 +49,18 @@ public class AuthController {
         return getLoginResult(request, response, userInfo);
     }
 
+    /**
+     * 获取用户信息接口
+     * @param principal
+     * @return
+     */
+    @GetMapping("/userInfo")
+    public Result userInfo(Principal principal) {
+
+        SysUser sysUser = sysUserService.findByUsername(principal.getName());
+
+        return new Result(200,"获取用户信息成功",sysUser);
+    }
 
     /**
      * 公共方法抽取

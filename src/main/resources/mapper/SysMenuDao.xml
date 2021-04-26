@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bin.project.dao.SysMenuDao">
+    <!--  <select id="findByWords" resultType="com.bin.pojo.EnWords">
+          SELECT * FROM EnWords where word like concat(#{words},'%')
+      </select>-->
+
+    <!--查询2级菜单-->
+    <select id="getUserMenuInfo" resultType="com.bin.project.dto.SysMenuParam">
+       select
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`
+	from sys_user su
+ left join sys_user_role sur
+ on su.id=sur.user_id
+  left join sys_role sr
+ on sr.id = sur.role_id
+   left join sys_role_menu srm
+	 on sr.id = srm.role_id
+	left join sys_menu sm
+	on sm.id = srm.menu_id
+	where su.username=#{username} and sm.`level`=2;
+
+    </select>
+    <!--查询1级菜单-->
+    <select id="getUserMenuInfoOne" resultType="com.bin.project.dto.SysMenuParam">
+       select
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`
+	from sys_user su
+ left join sys_user_role sur
+ on su.id=sur.user_id
+  left join sys_role sr
+ on sr.id = sur.role_id
+   left join sys_role_menu srm
+	 on sr.id = srm.role_id
+	left join sys_menu sm
+	on sm.id = srm.menu_id
+	where su.username=#{username} and sm.`level`=1;
+
+    </select>
+
+    <!--查询0级菜单-->
+    <select id="getUserMenuInfoZero" resultType="com.bin.project.dto.SysMenuParam">
+       select
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`
+	from sys_user su
+ left join sys_user_role sur
+ on su.id=sur.user_id
+  left join sys_role sr
+ on sr.id = sur.role_id
+   left join sys_role_menu srm
+	 on sr.id = srm.role_id
+	left join sys_menu sm
+	on sm.id = srm.menu_id
+	where su.username=#{username} and sm.`level`=0;
+
+    </select>
+
+
+
+</mapper>

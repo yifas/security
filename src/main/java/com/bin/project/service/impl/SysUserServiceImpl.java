@@ -1,10 +1,9 @@
 package com.bin.project.service.impl;
+import java.util.ArrayList;
 import java.util.Date;
 
-import com.alibaba.fastjson.JSON;
 import com.bin.common.PageQueryBean;
 import com.bin.common.PageResult;
-import com.bin.common.util.DateUtil;
 import com.bin.project.dao.SysUserDao;
 import com.bin.project.dto.RegisterParam;
 import com.bin.project.pojo.SysUser;
@@ -25,7 +24,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserDao sysUserDao;
-
 
     @Override
     public SysUser findByUsername(String username) {
@@ -84,6 +82,19 @@ public class SysUserServiceImpl implements SysUserService {
         //sysUser.setBirthday(DateUtil.fomatDate(sysUser.getBirthday().toString()));
         sysUserDao.register(sysUser);
         return sysUser;
+    }
+
+    @Override
+    public List<String> getUserAuthorityInfo(Long id) {
+        List<String> list =new ArrayList<>();
+        //待修改
+        for (String s : sysUserDao.getUserRoleInfo(id)) {
+            list.add(s);
+        }
+        for (String s : sysUserDao.getUserAuthInfo(id)) {
+            list.add(s);
+        }
+        return list;
     }
 
 

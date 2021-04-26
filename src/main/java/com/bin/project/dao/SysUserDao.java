@@ -72,4 +72,18 @@ public interface SysUserDao {
      * @return
      */
     void register(SysUser sysUser);
+
+    /**
+     * 查询所有的权限
+     * @param id
+     * @return
+     */
+    List<String> getUserRoleInfo(Long id);
+
+    /**
+     * 查询所有的权限
+     * @param id
+     * @return
+     */
+    List<String> getUserAuthInfo(Long id);
 }
