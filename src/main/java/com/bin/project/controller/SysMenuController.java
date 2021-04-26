@@ -1,15 +1,19 @@
 package com.bin.project.controller;
 
 import com.bin.common.Result;
+import com.bin.common.enums.ResultEnum;
 import com.bin.project.dto.SysMenuParam;
 import com.bin.project.pojo.SysUser;
 import com.bin.project.service.SysMenuService;
 import com.bin.project.service.SysUserService;
+import com.bin.security.component.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +36,9 @@ public class SysMenuController {
      */
     @GetMapping("/nav")
     public Result nav(Principal principal) {
+        if (principal==null){
+            return Result.error(ResultEnum.LOGIN_OVERDUE);
+        }
         SysUser sysUser = sysUserService.findByUsername(principal.getName());
 
         // 获取当前权限信息

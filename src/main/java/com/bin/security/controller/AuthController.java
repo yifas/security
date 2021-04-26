@@ -2,6 +2,7 @@ package com.bin.security.controller;
 
 
 import com.bin.common.Result;
+import com.bin.common.enums.ResultEnum;
 import com.bin.common.util.JwtTokenUtil;
 import com.bin.common.util.RedisUtil;
 import com.bin.project.dto.LoginParam;
@@ -11,9 +12,11 @@ import com.bin.security.component.UserInfo;
 import com.bin.security.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
@@ -51,12 +54,14 @@ public class AuthController {
 
     /**
      * 获取用户信息接口
-     * @param principal
+     * @param principal  身份信息
      * @return
      */
     @GetMapping("/userInfo")
     public Result userInfo(Principal principal) {
-
+        if (principal==null){
+            return Result.error(ResultEnum.LOGIN_OVERDUE);
+        }
         SysUser sysUser = sysUserService.findByUsername(principal.getName());
 
         return new Result(200,"获取用户信息成功",sysUser);
