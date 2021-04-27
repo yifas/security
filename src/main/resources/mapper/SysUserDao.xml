@@ -7,7 +7,7 @@
       </select>-->
 
     <sql id="userInfo">
-        birthday,gender,username,remark,station,telephone,login_time
+        id,birthday,gender,username,remark,station,telephone,login_time
     </sql>
     <select id="findByUsername" resultType="com.bin.project.pojo.SysUser">
         SELECT * FROM sys_user where username = #{username}

@@ -35,7 +35,7 @@ public class SysUserController {
      * @param pageQueryBean
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/findUserList",method = RequestMethod.POST)
     public Result findUserList(@RequestBody PageQueryBean pageQueryBean) {
         return new Result(200,"查询成功",sysUserService.findUserList(pageQueryBean));
