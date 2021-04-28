@@ -1,6 +1,9 @@
 package com.bin.project.controller;
 
+import com.bin.common.PageQueryBean;
 import com.bin.common.Result;
+import com.bin.project.pojo.SysRole;
+import com.bin.project.pojo.SysUser;
 import com.bin.project.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,9 @@ public class SysRoleController {
      * 查询所有角色信息
      * @return
      */
-    @GetMapping
-    public Result roleList(){
-        return new Result(200,"查询成功",sysRoleService.roleList());
+    @PostMapping("/findAllRole")
+    public Result roleList(@RequestBody PageQueryBean pageQueryBean){
+        return new Result(200,"查询成功",sysRoleService.roleList(pageQueryBean));
     }
 
     /**
@@ -52,9 +55,9 @@ public class SysRoleController {
      * @param roleIds  角色ID
      * @return
      */
-    @PostMapping("/updateRole")
-    public Result updateRole(@RequestParam("id") Long id,
-                             @RequestParam("roleIds") List<Long> roleIds){
+    @PostMapping("/updateRole/{id}")
+    public Result updateRole(@PathVariable Long id,
+                             @RequestBody List<Long> roleIds){
 
         //返回影响行数 判断是否成功
 
@@ -66,4 +69,26 @@ public class SysRoleController {
         return Result.error();
     }
 
+    /**
+     * 增删改查的信息回显
+     * @param id
+     * @return
+     */
+    @GetMapping("/findRoleByRoleId/{id}")
+    public Result findRoleByRoleId(@PathVariable Long id){
+        return new Result(200,"查询成功",sysRoleService.findRoleByRoleId(id));
+    }
+
+    /**
+     * 修改角色
+     * @param id
+     * @param sysRole
+     * @return
+     */
+    @PostMapping(value = "/updateRoleInfo/{id}")
+    public Result updateRoleInfo(@PathVariable Long id,@RequestBody SysRole sysRole) {
+
+        sysRoleService.updateRoleInfo(id,sysRole);
+        return new Result(200,"更新成功");
+    }
 }

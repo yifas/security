@@ -7,7 +7,10 @@
       </select>-->
 
     <select id="roleList" resultType="com.bin.project.pojo.SysRole">
-        SELECT * FROM sys_role;
+        SELECT * FROM sys_role
+        <if test="queryString != null and queryString.length > 0">
+            where id=#{queryString} or name=#{queryString}
+        </if>
     </select>
 
     <select id="findRoleAlreadyLogin" resultType="com.bin.project.pojo.SysRole">
@@ -30,5 +33,25 @@
         where su.id=#{id};
     </select>
 
+
+    <select id="findRoleByRoleId" resultType="com.bin.project.pojo.SysRole">
+        SELECT * FROM sys_role where id=#{id};
+    </select>
+
+    <update id="updateRoleInfo" parameterType="com.bin.project.pojo.SysRole">
+        UPDATE sys_role
+        <set>
+            <if test="null != name and '' != name">
+            name = #{name},
+            </if>
+            <if test="null != keyword and '' != keyword">
+            keyword = #{keyword},
+            </if>
+            <if test="null != description and '' != description">
+            description = #{description}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
 </mapper>

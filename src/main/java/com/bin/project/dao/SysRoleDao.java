@@ -1,6 +1,7 @@
 package com.bin.project.dao;
 
 import com.bin.project.pojo.SysRole;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface SysRoleDao {
      * 查询所有角色
      * @return
      */
-    List<SysRole> roleList();
+    Page<SysRole> roleList(String queryString);
 
     /**
      * 获取当前用户的角色
@@ -26,4 +27,17 @@ public interface SysRoleDao {
      * @return
      */
     List<SysRole> findRoleById(@Param("id")Long id);
+
+    /**
+     * 用于修改角色信息
+     * @param id
+     * @return
+     */
+    SysRole findRoleByRoleId(Long id);
+
+    /**
+     * 更新角色信息
+     * @param sysRole
+     */
+    void updateRoleInfo(SysRole sysRole);
 }

@@ -1,11 +1,16 @@
 package com.bin.project.service.impl;
 
+import com.bin.common.PageQueryBean;
+import com.bin.common.PageResult;
 import com.bin.project.dao.SysRoleDao;
 import com.bin.project.dao.SysUserRoleDao;
 import com.bin.project.pojo.SysRole;
+import com.bin.project.pojo.SysUser;
 import com.bin.project.pojo.SysUserRole;
 import com.bin.project.service.SysRoleService;
 import com.bin.security.component.UserInfo;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,8 +31,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 
     @Override
-    public List<SysRole> roleList() {
-        return sysRoleDao.roleList();
+    public PageResult roleList(PageQueryBean pageQueryBean) {
+        Integer currentPage = pageQueryBean.getCurrentPage();
+        Integer pageSize = pageQueryBean.getPageSize();
+        String queryString = pageQueryBean.getQueryString();
+
+        PageHelper.startPage(currentPage,pageSize);
+        Page<SysRole> page = sysRoleDao.roleList(queryString);
+        return new PageResult(page.getTotal(),page.getResult());
     }
 
     @Override
@@ -74,5 +85,16 @@ public class SysRoleServiceImpl implements SysRoleService {
         //还需要删除Permission
         //删除menu
         return count;
+    }
+
+    @Override
+    public SysRole findRoleByRoleId(Long id) {
+        return sysRoleDao.findRoleByRoleId(id);
+    }
+
+    @Override
+    public void updateRoleInfo(Long id, SysRole sysRole) {
+        sysRole.setId(id);
+        sysRoleDao.updateRoleInfo(sysRole);
     }
 }
