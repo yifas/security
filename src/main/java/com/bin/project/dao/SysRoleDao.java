@@ -40,4 +40,17 @@ public interface SysRoleDao {
      * @param sysRole
      */
     void updateRoleInfo(SysRole sysRole);
+
+    /**
+     * crud中查询所有
+     * @return
+     */
+    List<SysRole> findRoleList();
+
+    /**
+     * 新增角色
+     * @param sysRole
+     * @return
+     */
+    void addRole(SysRole sysRole);
 }

@@ -57,6 +57,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         //全部封装到
         //SysMenuParam out = new SysMenuParam();
        //out.setChildren(finalList);
+        //底层多个角色对应多个  需要加个distinct
         List<SysMenuParam> finalFinalList = new ArrayList<>();
         for (SysMenuParam m0 : list0) {
             SysMenuParam finalMenu = new SysMenuParam();

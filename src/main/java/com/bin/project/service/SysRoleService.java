@@ -21,4 +21,8 @@ public interface SysRoleService {
     SysRole findRoleByRoleId(Long id);
 
     void updateRoleInfo(Long id, SysRole sysRole);
+
+    List<SysRole> findRoleList();
+
+    void addRole(SysRole sysRole);
 }

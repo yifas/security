@@ -9,7 +9,7 @@
     <!--查询2级菜单-->
     <select id="getUserMenuInfo" resultType="com.bin.project.dto.SysMenuParam">
        select
-	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
 	from sys_user su
  left join sys_user_role sur
  on su.id=sur.user_id
@@ -25,7 +25,7 @@
     <!--查询1级菜单-->
     <select id="getUserMenuInfoOne" resultType="com.bin.project.dto.SysMenuParam">
        select
-	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
 	from sys_user su
  left join sys_user_role sur
  on su.id=sur.user_id
@@ -41,8 +41,8 @@
 
     <!--查询0级菜单-->
     <select id="getUserMenuInfoZero" resultType="com.bin.project.dto.SysMenuParam">
-       select
-	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`
+       select distinct
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
 	from sys_user su
  left join sys_user_role sur
  on su.id=sur.user_id

@@ -15,5 +15,7 @@ public class SysMenuParam implements Serializable {
     private String path;
     private Integer parentMenuId;
     private Integer level;
+    private String component;
+    private String icon;
     private List<SysMenuParam> children=new ArrayList<>();
 }

@@ -97,4 +97,15 @@ public class SysRoleServiceImpl implements SysRoleService {
         sysRole.setId(id);
         sysRoleDao.updateRoleInfo(sysRole);
     }
+
+    @Override
+    public List<SysRole> findRoleList() {
+
+        return sysRoleDao.findRoleList();
+    }
+
+    @Override
+    public void addRole(SysRole sysRole) {
+         sysRoleDao.addRole(sysRole);
+    }
 }

@@ -21,13 +21,23 @@ public class SysRoleController {
 
 
     /**
-     * 查询所有角色信息
+     * 分页查询所有角色信息
      * @return
      */
     @PostMapping("/findAllRole")
     public Result roleList(@RequestBody PageQueryBean pageQueryBean){
         return new Result(200,"查询成功",sysRoleService.roleList(pageQueryBean));
     }
+
+    /**
+     * 查询所有角色信息
+     * @return
+     */
+    @GetMapping
+    public Result findRoleList(){
+        return new Result(200,"查询成功",sysRoleService.findRoleList());
+    }
+
 
     /**
      * 获取已登录用户的角色
@@ -90,5 +100,18 @@ public class SysRoleController {
 
         sysRoleService.updateRoleInfo(id,sysRole);
         return new Result(200,"更新成功");
+    }
+
+    /**
+     * 新增角色
+     * @param sysRole
+     * @return
+     */
+    @PostMapping(value = "/addRole")
+    public Result addRole(@RequestBody SysRole sysRole) {
+
+        sysRoleService.addRole(sysRole);
+        return new Result(200,"新增成功");
+
     }
 }

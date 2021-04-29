@@ -13,6 +13,12 @@
         </if>
     </select>
 
+    <select id="findRoleList" resultType="com.bin.project.pojo.SysRole">
+        SELECT * FROM sys_role
+    </select>
+
+
+
     <select id="findRoleAlreadyLogin" resultType="com.bin.project.pojo.SysRole">
           SELECT
         	*
@@ -54,4 +60,32 @@
         WHERE id = #{id}
     </update>
 
+    <insert id="addRole" parameterType="com.bin.project.pojo.SysRole">
+        <selectKey keyProperty="id" resultType="Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != name and '' != name">
+                name,
+            </if>
+            <if test="null != keyword and '' != keyword">
+                keyword,
+            </if>
+            <if test="null != description and '' != description">
+                description
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != name and '' != name">
+                #{name},
+            </if>
+            <if test="null != keyword and '' != keyword">
+                #{keyword},
+            </if>
+            <if test="null != description and '' != description">
+                #{description}
+            </if>
+        </trim>
+    </insert>
 </mapper>
