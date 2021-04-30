@@ -57,5 +57,124 @@
     </select>
 
 
+    <!--查询0级菜单-->
+    <select id="findMenuLevelZero" resultType="com.bin.project.dto.SysMenuParam">
+       select distinct
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
+	from  sys_menu sm
+	where sm.`level`=0;
+    </select>
+    <!--查询1级菜单-->
+    <select id="findMenuLevelOne" resultType="com.bin.project.dto.SysMenuParam">
+       select distinct
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
+	from  sys_menu sm
+	where sm.parentMenuId=#{id}
+    </select>
+    <!--根据角色ID查询对应的menu-->
+    <select id="findMenuListByRoleId" resultType="com.bin.project.pojo.SysMenu">
+        SELECT
+		sm.*
+	    FROM sys_role_menu srm
+	    LEFT JOIN sys_menu sm
+	    on sm.id= srm.menu_id
+	    WHERE srm.role_id=#{id} and sm.level=1
+    </select>
+
+    <!--findMenuList-->
+
+    <select id="findMenuList" resultType="com.bin.project.pojo.SysMenu">
+        SELECT * FROM sys_menu
+        <if test="queryString != null and queryString.length > 0">
+            where name=#{queryString} or id=#{queryString}
+        </if>
+    </select>
+
+
+    <select id="findMenuById" resultType="com.bin.project.pojo.SysMenu">
+        SELECT * FROM sys_menu where id=#{id}
+
+    </select>
+
+    <update id="updateMenu" parameterType="com.bin.project.pojo.SysMenu">
+        UPDATE sys_menu
+        <set>
+            <if test="null != name and '' != name">name = #{name},</if>
+            <if test="null != path and '' != path">path = #{path},</if>
+            <if test="null != priority and '' != priority">priority = #{priority},</if>
+            <if test="null != icon and '' != icon">icon = #{icon},</if>
+            <if test="null != description and '' != description">description = #{description},</if>
+            <if test="null != parentmenuid and '' != parentmenuid">parentmenuid = #{parentmenuid},</if>
+            <if test="null != level">`level` = #{level},</if>
+            <if test="null != component">component = #{component}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addMenu" parameterType="com.bin.project.pojo.SysMenu">
+        <selectKey keyProperty="id" resultType="Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        INSERT INTO sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != name and '' != name">
+                name,
+            </if>
+            <if test="null != linkUrl and '' != linkUrl">
+                linkUrl,
+            </if>
+            <if test="null != path and '' != path">
+                path,
+            </if>
+            <if test="null != priority and '' != priority">
+                priority,
+            </if>
+            <if test="null != icon and '' != icon">
+                icon,
+            </if>
+            <if test="null != description and '' != description">
+                description,
+            </if>
+            <if test="null != parentmenuid and '' != parentmenuid">
+                parentmenuid,
+            </if>
+            <if test="null != level">
+                level,
+            </if>
+            <if test="null != component">
+                component
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != name and '' != name">
+                #{name},
+            </if>
+            <if test="null != linkUrl and '' != linkUrl">
+                #{linkUrl},
+            </if>
+            <if test="null != path and '' != path">
+                #{path},
+            </if>
+            <if test="null != priority and '' != priority">
+                #{priority},
+            </if>
+            <if test="null != icon and '' != icon">
+                #{icon},
+            </if>
+            <if test="null != description and '' != description">
+                #{description},
+            </if>
+            <if test="null != parentmenuid and '' != parentmenuid">
+                #{parentmenuid},
+            </if>
+            <if test="null != level">
+                #{level},
+            </if>
+            <if test="null != component">
+                #{component}
+            </if>
+        </trim>
+    </insert>
 
 </mapper>

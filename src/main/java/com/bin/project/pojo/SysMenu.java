@@ -54,5 +54,10 @@ public class SysMenu implements Serializable {
      */
     private Integer level;
 
+    /**
+     * 动态路由
+     */
+    private String component;
+
     public SysMenu() {}
 }

@@ -1,18 +1,22 @@
 package com.bin.project.service.impl;
 
+import com.bin.common.PageQueryBean;
+import com.bin.common.PageResult;
 import com.bin.project.dao.SysPermissionDao;
 import com.bin.project.dao.SysRolePermissionDao;
 import com.bin.project.dto.SysPermissionParam;
 import com.bin.project.pojo.SysPermission;
 import com.bin.project.pojo.SysRolePermission;
-import com.bin.project.pojo.SysUserRole;
 import com.bin.project.service.SysPermissionService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +28,6 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
     @Autowired
     private SysRolePermissionDao sysRolePermissionDao;
-
 
 
     @Override
@@ -83,6 +86,36 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
             sysRolePermissionDao.insertList(list);
         }
+
+    }
+
+    @Override
+    public PageResult findPermList(PageQueryBean pageQueryBean) {
+        Integer currentPage = pageQueryBean.getCurrentPage();
+        Integer pageSize = pageQueryBean.getPageSize();
+        String queryString = pageQueryBean.getQueryString();
+
+        PageHelper.startPage(currentPage, pageSize);
+        Page<SysPermission> page = sysPermissionDao.findPermList(queryString);
+        return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public SysPermission findPermById(Long id) {
+
+        return sysPermissionDao.findPermById(id);
+    }
+
+    @Override
+    public void addPerm(SysPermission sysPermission) {
+        sysPermission.setCreateTime(new Date());
+        sysPermissionDao.addPerm(sysPermission);
+    }
+
+    @Override
+    public void updatePerm(Long id, SysPermission sysPermission) {
+        sysPermission.setId(id);
+        sysPermissionDao.updatePerm(sysPermission);
 
     }
 }

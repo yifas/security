@@ -1,19 +1,16 @@
 package com.bin.project.controller;
 
+import com.bin.common.PageQueryBean;
 import com.bin.common.Result;
 import com.bin.common.enums.ResultEnum;
 import com.bin.project.dto.SysMenuParam;
+import com.bin.project.pojo.SysMenu;
 import com.bin.project.pojo.SysUser;
 import com.bin.project.service.SysMenuService;
 import com.bin.project.service.SysUserService;
-import com.bin.security.component.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -53,5 +50,79 @@ public class SysMenuController {
 
         map.put("nav",menuList);
         return new Result(200,"返回菜单成功",map);
+    }
+
+
+    /**
+     * 用于构建Tree数据
+     * @return
+     */
+    @GetMapping("/findMenuListTree")
+    public Result findMenuListTree(){
+        return new Result(200,"查询成功",sysMenuService.findMenuListTree());
+    }
+
+
+    @GetMapping("/findMenuListByRoleId/{id}")
+    public Result findMenuListByRoleId(@PathVariable Long id){
+        return new Result(200,"查询成功",sysMenuService.findMenuListByRoleId(id));
+    }
+
+    /**
+     * 更新角色对应菜单
+     * @param id    roleID
+     * @param menuIds  权限ID集合
+     * @return
+     */
+    @PostMapping("/updateRoleMenu/{id}")
+    public Result updateRoleMenu(@PathVariable Long id,
+                                 @RequestBody List<Long> menuIds){
+
+        sysMenuService.updateRoleMenu(id,menuIds);
+
+        return new Result(200,"查询成功");
+    }
+
+    /**
+     *  分页查询
+     * @param pageQueryBean
+     * @return
+     */
+    @PostMapping("/findMenuList")
+    public Result findMenuList(@RequestBody PageQueryBean pageQueryBean) {
+        return new Result(200,"查询成功",sysMenuService.findMenuList(pageQueryBean));
+    }
+
+    /**
+     * 信息回显
+     * @param id
+     * @return
+     */
+    @GetMapping("/findMenuById/{id}")
+    public Result findMenuById(@PathVariable Long id){
+        return new Result(200,"查询成功",sysMenuService.findMenuById(id));
+    }
+
+    /**
+     * 修改菜单信息
+     * @param id
+     * @param sysMenu
+     * @return
+     */
+    @PutMapping(value = "/updateMenu/{id}")
+    public Result updateMenu(@PathVariable Long id,@RequestBody SysMenu sysMenu) {
+        sysMenuService.updateMenu(id,sysMenu);
+        return new Result(200,"更新成功");
+    }
+
+    /**
+     * 新增菜单
+     * @param sysMenu
+     * @return
+     */
+    @PostMapping("/addMenu")
+    public Result addMenu(@RequestBody SysMenu sysMenu) {
+        sysMenuService.addMenu(sysMenu);
+        return new Result(200,"查询成功");
     }
 }
