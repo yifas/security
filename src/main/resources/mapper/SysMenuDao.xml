@@ -8,7 +8,7 @@
 
     <!--查询2级菜单-->
     <select id="getUserMenuInfo" resultType="com.bin.project.dto.SysMenuParam">
-       select
+       select distinct
 	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
 	from sys_user su
  left join sys_user_role sur
@@ -24,7 +24,7 @@
     </select>
     <!--查询1级菜单-->
     <select id="getUserMenuInfoOne" resultType="com.bin.project.dto.SysMenuParam">
-       select
+       select distinct
 	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
 	from sys_user su
  left join sys_user_role sur
@@ -70,7 +70,26 @@
 	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
 	from  sys_menu sm
 	where sm.parentMenuId=#{id}
+
     </select>
+
+    <!--查询1级菜单-->
+    <select id="findMenuLevelByIdAndUsername" resultType="com.bin.project.dto.SysMenuParam">
+	 select distinct
+	sm.id,sm.`name`,sm.linkUrl,sm.path,sm.parentMenuId,sm.`level`,sm.component,sm.icon
+	from sys_user su
+    left join sys_user_role sur
+    on su.id=sur.user_id
+     left join sys_role sr
+    on sr.id = sur.role_id
+   left join sys_role_menu srm
+	 on sr.id = srm.role_id
+	left join sys_menu sm
+	on sm.id = srm.menu_id
+	where su.username=#{username} and sm.parentMenuId=#{id};
+    </select>
+
+
     <!--根据角色ID查询对应的menu-->
     <select id="findMenuListByRoleId" resultType="com.bin.project.pojo.SysMenu">
         SELECT

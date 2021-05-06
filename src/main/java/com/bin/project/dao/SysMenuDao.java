@@ -3,6 +3,8 @@ package com.bin.project.dao;
 import com.bin.project.dto.SysMenuParam;
 import com.bin.project.pojo.SysMenu;
 import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -36,6 +38,12 @@ public interface SysMenuDao {
      * @return
      */
     List<SysMenuParam> findMenuLevelOne(Long id);
+
+    /**
+     * 构建Tree 1级目录
+     * @return
+     */
+    List<SysMenuParam> findMenuLevelByIdAndUsername(@Param("id") Long id, @Param("username") String username);
 
     /**
      * 根据角色ID查询对应的menu

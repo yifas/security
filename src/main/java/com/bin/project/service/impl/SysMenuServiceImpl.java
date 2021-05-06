@@ -33,10 +33,8 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public List<SysMenuParam> getUserMenuInfo() {
         /*
-            1.最外层封装顶级菜单
-            2.第二层封装次级菜单
-            3。第三层封装具体
-            根据user信息和level直接查询封装
+            1.根据用户名 获取
+
          */
         UserInfo principal = null;
         try {
@@ -44,6 +42,32 @@ public class SysMenuServiceImpl implements SysMenuService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //查询当前用户的0层数据
+        List<SysMenuParam> list0 = sysMenuDao.getUserMenuInfoZero(principal.getUsername());
+        //构建最终返回集合
+        List<SysMenuParam> list = new ArrayList<>();
+        //遍历最外层菜单
+        for (SysMenuParam menuParam : list0) {
+            SysMenuParam sysMenuParam = new SysMenuParam();
+            BeanUtils.copyProperties(menuParam,sysMenuParam);
+            //存储最外层children
+            List<SysMenuParam> listOne = new ArrayList<>();
+            for (SysMenuParam param : sysMenuDao.findMenuLevelByIdAndUsername(menuParam.getId(),principal.getUsername())) {
+                SysMenuParam sysMenu = new SysMenuParam();
+                BeanUtils.copyProperties(param,sysMenu);
+                listOne.add(sysMenu);
+            }
+
+            sysMenuParam.setChildren(listOne);
+
+            list.add(sysMenuParam);
+        }
+
+        return list;
+
+/*
+
         //获取level 为2的
         List<SysMenuParam> list2 = sysMenuDao.getUserMenuInfo(principal.getUsername());
         List<SysMenuParam> list1 = sysMenuDao.getUserMenuInfoOne(principal.getUsername());
@@ -78,6 +102,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         }
 
         return finalFinalList;
+*/
 
     }
 

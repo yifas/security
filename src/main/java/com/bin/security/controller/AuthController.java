@@ -45,11 +45,27 @@ public class AuthController {
     @Autowired
     private RedisUtil redisUtil;
 
+    /**
+     * 登录接口
+     * @param loginParam
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Result login(@RequestBody @Validated LoginParam loginParam,
                         HttpServletRequest request, HttpServletResponse response){
         UserInfo userInfo = authService.login(loginParam);
         return getLoginResult(request, response, userInfo);
+    }
+
+    /**
+     * 登出
+     * @return
+     */
+    @PostMapping("/logout")
+    public Result logout() {
+        return Result.success();
     }
 
     /**
@@ -63,7 +79,8 @@ public class AuthController {
             return Result.error(ResultEnum.LOGIN_OVERDUE);
         }
         SysUser sysUser = sysUserService.findByUsername(principal.getName());
-
+        //不将密码返回
+        sysUser.setPassword(null);
         return new Result(200,"获取用户信息成功",sysUser);
     }
 
@@ -85,6 +102,7 @@ public class AuthController {
         // 将token放入header返回，Access-Control-Expose-Headers解决自定义请求头前端获取不到的问题
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         response.setHeader("Authorization", BEARER + jwtToken);
-        return Result.success(SUCCESS, userInfo);
+        //return Result.success(SUCCESS, userInfo);
+        return Result.success(SUCCESS);
     }
 }
