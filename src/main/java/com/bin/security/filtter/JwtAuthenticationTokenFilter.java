@@ -50,6 +50,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     //如果没有Authorization直接放行
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        //放行OPTIONS请求
+        String method = request.getMethod();
+        if ("OPTIONS".equals(method)) {
+            filterChain.doFilter(request, response);
+        }
         String authHeader = request.getHeader("Authorization");
         response.setContentType("application/json;charset=utf-8");
         if (authHeader != null && authHeader.startsWith(BEARER)) {

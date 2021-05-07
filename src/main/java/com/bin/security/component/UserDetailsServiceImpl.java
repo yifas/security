@@ -35,6 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //从数据库查询用户名是否存在
         SysUser result = sysUserDao.findByUsername(username.trim());
         if (result==null){
+            //todo
+            //此处应该进行统一异常处理  捕获该异常 返回信息给前端
             throw new UsernameNotFoundException(LoginConstant.USER_DOES_NOT_EXIST);
         }else {
             //查询用户名对应的所有role  List<Role> 可以为Role对象 get需要的数据
