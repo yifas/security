@@ -1,6 +1,5 @@
 package com.bin.project.dao;
 
-import com.bin.project.dto.RegisterParam;
 import com.bin.project.pojo.SysPermission;
 import com.bin.project.pojo.SysRole;
 import com.bin.project.pojo.SysUser;

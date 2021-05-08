@@ -4,8 +4,6 @@ import com.bin.project.dto.SysMenuParam;
 import com.bin.project.pojo.SysMenu;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 
 public interface SysMenuDao {
